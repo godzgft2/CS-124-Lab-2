@@ -177,5 +177,33 @@ void quicksort(std::vector<std::string> a, int from, int to)
 //Finds timing of two sorting functions chosen by user
 void sorttime(std::vector<std::string> file1, std::vector<std::string> file2, std::vector<std::string> file3, int sort1, int sort2)
 {
-	
+	double sorttotal1=0, sorttotal2=0, unsorttotal1=0, unsorttotal2=0;
+	using namespace std::chrono;
+	switch(sort1)
+	{
+		case 1:			//Bubble
+			for(int i = 0; i < 9; i++)
+			{
+				high_resolution_clock::time_point t1 = high_resolution_clock::now();
+				bubble_sort(std::vector<std::string> a, int size)
+				high_resolution_clock::time_point t2 = high_resolution_clock::now();
+				duration<double> time_span1 = duration_cast<duration<double>> (t2-t1);
+				unsorttotal1 += time_span1.count();
+				
+				high_resolution_clock::time_point t3 = high_resolution_clock::now();
+				bubble_sort (std::vector<std::string> &a, int size)
+				high_resolution_clock::time_point t4 = high_resolution_clock::now();
+				duration<double> time_span2 = duration_cast<duration<double>> (t4-t3);
+				sorttotal1 += time_span2.count();
+			}
+			break;
+		case 2:			//Selection
+			break;
+		case 3:			//Merge
+			break;
+		case 4:			//Insertion
+			break;
+		case 5:			//Quick
+			break;
+	}
 }

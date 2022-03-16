@@ -64,3 +64,15 @@ void List::addorder(std::string element)
 		}
 	}
 }
+
+void List::remove()
+{
+	Node* traverse = headptr;
+	Node* next = nullptr;
+	while(traverse!=nullptr)
+	{
+		next = traverse->next;
+		delete traverse;
+		traverse = next;
+	}
+}
