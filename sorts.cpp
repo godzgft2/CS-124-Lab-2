@@ -1,6 +1,7 @@
 //sorts.cpp
 #include <string>
 #include <vector>
+#include <chrono>
 #include "sorts.h"
 
 //Taken from textbook, adjusted for strings, swaps two string variable values
@@ -12,26 +13,24 @@ void swap (std::string &x, std::string &y)
 }
 
 // Bubble sort optimized by group: Yosuf, Joahan, Boesong, Abdurrahman, returns number of swaps
-int bubble_sort (std::vector<std::string> &a, int size)
+void bubble_sort (std::vector<std::string> &a, int size)
 {
-    int total = 0;
-    for (int j = 0; j < size; j++)
-    {
+   for (int j = 0; j < size; j++)
+   {
 		int count_swap = 0;					//counter for number of swaps in a single loop						
-        for (int i = 0; i < size-1; i++)    //changed to size - 1, bubble sort only needs to reach second to last element
-        {                                   //also solves out of bounds error by not checking element after last element
+         for (int i = 0; i < size-1; i++)    //changed to size - 1, bubble sort only needs to reach second to last element
+         {                                   //also solves out of bounds error by not checking element after last element
             if (a[i+1] < a[i])
             {
                 swap(a[i+1],a[i]);          //swaps next element with current element if next is smaller than current
                 count_swap++;
             }
-        }
-        total = total + count_swap;
-        if (count_swap == 0)				//If no swaps in a loop, array is sorted, exits function
-            return total;
+         }
+         if (count_swap == 0)				//If no swaps in a loop, array is sorted, exits function
+            return;
         
-    }
-    return total;
+   }
+   return;
 }
 
 //Function taken from textbook, adjusted for vectors, finds position of minimum value
@@ -46,23 +45,21 @@ int min_position(std::vector<std::string> a, int from, int to)
 }
 
 //Taken from textbook, adjusted for vectors, also counts and returns number of swaps
-int selection_sort(std::vector<std::string> &a, int size)
+void selection_sort(std::vector<std::string> &a, int size)
 {
 	int next; // The next position to be set to the minimum
-	int count = 0;
 	for (next = 0; next < size - 1; next++)
 	{
 		// Find the position of the minimum starting at next
 		int min_pos = min_position(a, next, size - 1);
 		// Swap the next element and the minimum
 		swap(a[next], a[min_pos]);
-		count++;
 	}
-	return count;
+	return;
 }
 
 //Taken from textbook, adjusted for vectors
-void merge(std::vector<std::string> a, int from, int mid, int to)
+void merge(std::vector<std::string> &a, int from, int mid, int to)
 {  
    int n = to - from + 1; // Size of the range to be merged 
    // Merge both halves into a temporary array b 
@@ -122,7 +119,7 @@ void merge(std::vector<std::string> a, int from, int mid, int to)
 }
 
 //Taken from textbook, adjusted for vectors
-void merge_sort(std::vector<std::string> a, int from, int to)
+void merge_sort(std::vector<std::string> &a, int from, int to)
 {
 	if (from == to) { return; }
 	int mid = (from + to) / 2;
@@ -133,7 +130,7 @@ void merge_sort(std::vector<std::string> a, int from, int to)
 }
 
 //Takwn from textbook, adjusted for vectors of strings
-void insertion_sort(std::vector<std::string> a, int size)
+void insertion_sort(std::vector<std::string> &a, int size)
 {
    for (int i = 1; i < size; i++)
    {
@@ -151,7 +148,7 @@ void insertion_sort(std::vector<std::string> a, int size)
 }
 
 //Taken from textbook, adapted for vectors of strings
-int partition(std::vector<std::string> a, int from, int to)
+int partition(std::vector<std::string> &a, int from, int to)
 {
    std::string pivot = a[from];
    int i = from - 1;
@@ -166,7 +163,7 @@ int partition(std::vector<std::string> a, int from, int to)
 }
 
 //Taken from textbook, adapted for vectors of strings
-void quicksort(std::vector<std::string> a, int from, int to)
+void quicksort(std::vector<std::string> &a, int from, int to)
 {
    if (from >= to) { return; }
    int p = partition(a, from, to);
@@ -174,36 +171,4 @@ void quicksort(std::vector<std::string> a, int from, int to)
    quicksort(a, p + 1, to);
 }
 
-//Finds timing of two sorting functions chosen by user
-void sorttime(std::vector<std::string> file1, std::vector<std::string> file2, std::vector<std::string> file3, int sort1, int sort2)
-{
-	double sorttotal1=0, sorttotal2=0, unsorttotal1=0, unsorttotal2=0;
-	using namespace std::chrono;
-	switch(sort1)
-	{
-		case 1:			//Bubble
-			for(int i = 0; i < 9; i++)
-			{
-				high_resolution_clock::time_point t1 = high_resolution_clock::now();
-				bubble_sort(std::vector<std::string> a, int size)
-				high_resolution_clock::time_point t2 = high_resolution_clock::now();
-				duration<double> time_span1 = duration_cast<duration<double>> (t2-t1);
-				unsorttotal1 += time_span1.count();
-				
-				high_resolution_clock::time_point t3 = high_resolution_clock::now();
-				bubble_sort (std::vector<std::string> &a, int size)
-				high_resolution_clock::time_point t4 = high_resolution_clock::now();
-				duration<double> time_span2 = duration_cast<duration<double>> (t4-t3);
-				sorttotal1 += time_span2.count();
-			}
-			break;
-		case 2:			//Selection
-			break;
-		case 3:			//Merge
-			break;
-		case 4:			//Insertion
-			break;
-		case 5:			//Quick
-			break;
-	}
-}
+

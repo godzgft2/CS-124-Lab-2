@@ -7,6 +7,7 @@ Node::Node(std::string element)
 	data = element;
 }
 
+//Adds node to start of list
 void List::addfront(std::string element)
 {
 	Node *newnode = new Node(element);
@@ -23,6 +24,7 @@ void List::addfront(std::string element)
 	}
 }
 
+//Adds node to end of list
 void List::addback(std::string element)
 {
 	Node *newnode = new Node(element);
@@ -39,6 +41,7 @@ void List::addback(std::string element)
 	}
 }
 
+//Adds node to list in order of element
 void List::addorder(std::string element)
 {
 	if(element < headptr->data || headptr==nullptr)
@@ -65,6 +68,25 @@ void List::addorder(std::string element)
 	}
 }
 
+//Adds new node placed after node pointer given to function
+void List::addatpos(std::string element, Node* pos)
+{
+	Node *newnode = new Node(element);
+	if(headptr==nullptr)
+	{
+		headptr = newnode;
+		tailptr = newnode;
+	}
+	else
+	{
+		newnode->next = pos->next;
+		newnode->prev = pos;
+		pos->next->prev = newnode;
+		pos->next = newnode;
+	}
+}
+
+//Removes all nodes from the list
 void List::remove()
 {
 	Node* traverse = headptr;
@@ -74,5 +96,29 @@ void List::remove()
 		next = traverse->next;
 		delete traverse;
 		traverse = next;
+	}
+	headptr = nullptr;
+	tailptr = nullptr;
+}
+
+//Performs insertion sort algorithm using nodes
+void List::insertionsort()
+{
+	Node* traverse = headptr->next;
+	while(traverse!=nullptr)
+	{
+		Node* insertpos = traverse->prev;
+		while(traverse->data < insertpos->data && insertpos->prev!=nullptr)
+		{
+			insertpos = insertpos->prev;
+		}
+		if(traverse->data < insertpos->data)
+		{
+			this->addatpos(traverse->data, insertpos->prev);
+			traverse->next->prev = traverse->prev;
+			traverse->prev->next = traverse->next;
+			delete traverse;
+		}
+		traverse = traverse->next;
 	}
 }

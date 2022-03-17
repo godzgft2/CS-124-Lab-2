@@ -23,7 +23,9 @@ class List
 		void addfront(std::string element);
 		void addback(std::string element);
 		void addorder(std::string element);
+		void addatpos(std::string element, Node* pos);
 		void remove();
+		void insertionsort();
 	private:
 		Node *headptr = nullptr;
 		Node *tailptr = nullptr;
