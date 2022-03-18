@@ -198,14 +198,6 @@ std::vector<double> sorttime(std::vector<std::string> &file, int choice)
                 copy = file;
             }
             for(int i = 0; i < 9; i++)
-            {
-                high_resolution_clock::time_point t3 = high_resolution_clock::now();
-                insertion_sort(file, file.size());
-                high_resolution_clock::time_point t4 = high_resolution_clock::now();
-                duration<double> time_span2 = duration_cast<duration<double>> (t4-t3);
-                sorttotal += time_span2.count();
-            }
-			for(int i = 0; i < 9; i++)
 			{
 				for(unsigned int i = 0; i < file.size(); i++)
 					list.addback(file[i]);
@@ -216,6 +208,14 @@ std::vector<double> sorttime(std::vector<std::string> &file, int choice)
             	listtime = time_span3.count();
 				list.remove();
 			}
+            for(int i = 0; i < 9; i++)
+            {
+                high_resolution_clock::time_point t3 = high_resolution_clock::now();
+                insertion_sort(file, file.size());
+                high_resolution_clock::time_point t4 = high_resolution_clock::now();
+                duration<double> time_span2 = duration_cast<duration<double>> (t4-t3);
+                sorttotal += time_span2.count();
+            }
             break;
         case 5:			//Quick
 			for(int i = 0; i < 9; i++)

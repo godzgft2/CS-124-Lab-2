@@ -68,21 +68,26 @@ void List::addorder(std::string element)
 	}
 }
 
-//Adds new node placed after node pointer given to function
+//Adds new node placed before node pointer given to function
 void List::addatpos(std::string element, Node* pos)
 {
-	Node *newnode = new Node(element);
 	if(headptr==nullptr)
 	{
+		Node *newnode = new Node(element);
 		headptr = newnode;
 		tailptr = newnode;
 	}
+	else if(headptr == pos)
+	{
+		addfront(element);
+	}
 	else
 	{
-		newnode->next = pos->next;
-		newnode->prev = pos;
-		pos->next->prev = newnode;
-		pos->next = newnode;
+		Node *newnode = new Node(element);
+		newnode->next = pos;
+		newnode->prev = pos->prev;
+		pos->prev->next = newnode;
+		pos->prev = newnode;
 	}
 }
 
@@ -108,17 +113,39 @@ void List::insertionsort()
 	while(traverse!=nullptr)
 	{
 		Node* insertpos = traverse->prev;
-		while(traverse->data < insertpos->data && insertpos->prev!=nullptr)
+		while(traverse->data <= insertpos->data && insertpos->prev!=nullptr)
 		{
 			insertpos = insertpos->prev;
 		}
 		if(traverse->data < insertpos->data)
 		{
-			this->addatpos(traverse->data, insertpos->prev);
+			this->addatpos(traverse->data, insertpos);
 			traverse->next->prev = traverse->prev;
 			traverse->prev->next = traverse->next;
 			delete traverse;
 		}
+		/*if(traverse->data <= insertpos->data)
+		{
+			if(traverse!=tailptr)
+			{
+				traverse->next->prev = traverse->prev;
+				traverse->prev->next = traverse->next;
+			}
+			else
+				traverse->prev->next = nullptr;
+			if(insertpos!=headptr)
+			{
+				traverse->next = insertpos;
+				traverse->prev = insertpos->prev;
+				insertpos->prev->next = traverse;
+				insertpos->prev = traverse;
+			}
+			else
+			{
+				traverse->next = insertpos;
+				insertpos->prev = traverse;
+			}
+		}*/
 		traverse = traverse->next;
 	}
 }
