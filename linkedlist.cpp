@@ -124,28 +124,6 @@ void List::insertionsort()
 			traverse->prev->next = traverse->next;
 			delete traverse;
 		}
-		/*if(traverse->data <= insertpos->data)
-		{
-			if(traverse!=tailptr)
-			{
-				traverse->next->prev = traverse->prev;
-				traverse->prev->next = traverse->next;
-			}
-			else
-				traverse->prev->next = nullptr;
-			if(insertpos!=headptr)
-			{
-				traverse->next = insertpos;
-				traverse->prev = insertpos->prev;
-				insertpos->prev->next = traverse;
-				insertpos->prev = traverse;
-			}
-			else
-			{
-				traverse->next = insertpos;
-				insertpos->prev = traverse;
-			}
-		}*/
 		traverse = traverse->next;
 	}
 }
